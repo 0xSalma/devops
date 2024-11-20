@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image
+                    sh 'docker build -t my-devops-app .'
+                }
+            }
+        }
+
+        stage('Run Docker Container Locally') {
+            steps {
+                script {
+                    // Run the Docker container on localhost
+                    sh 'docker run -d -p 50000:50000 --name my-app-container my-devops-app'
+                }
+            }
+        }
+
+        stage('Test the Application') {
+            steps {
+                script {
+                    // Run your test scripts or curl commands to verify the app
+                    sh 'curl http://localhost:50000/api/health'
+                }
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                script {
+                    // Optionally stop and remove the container after tests
+                    sh 'docker stop my-app-container'
+                    sh 'docker rm my-app-container'
+                }
+            }
+        }
+    }
+}
