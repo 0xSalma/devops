@@ -4,7 +4,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image
+                    // Build Docker image
                     sh 'docker build -t my-devops-app .'
                 }
             }
@@ -13,8 +13,8 @@ pipeline {
         stage('Run Docker Container Locally') {
             steps {
                 script {
-                    // Run the Docker container on localhost
-                    sh 'docker run -d -p 50000:50000 --name my-app-container my-devops-app'
+                    // Run the Docker container on localhost in the background (Windows)
+                    bat 'start /B docker run -d -p 5000:5000 --name my-app-container my-devops-app'
                 }
             }
         }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     // Run your test scripts or curl commands to verify the app
-                    sh 'curl http://localhost:50000/api/health'
+                    bat 'curl http://localhost:8080/api/health'
                 }
             }
         }
@@ -31,9 +31,9 @@ pipeline {
         stage('Cleanup') {
             steps {
                 script {
-                    // Optionally stop and remove the container after tests
-                    sh 'docker stop my-app-container'
-                    sh 'docker rm my-app-container'
+                    // Stop and remove the container after tests
+                    bat 'docker stop my-app-container'
+                    bat 'docker rm my-app-container'
                 }
             }
         }
