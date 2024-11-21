@@ -5,15 +5,15 @@ pipeline {
             steps {
                 script {
                     // Build Docker image
-                    bat 'dir'
-                    bat 'docker build -t my-devops-app .'
+                  bat 'docker build -t my-devops-app -f devopstrain/Dockerfile devopstrain/'
+
                 }
             }
         }
 
         stage('Run Docker Container Locally') {
             steps {
-                script {
+                script {  
                     // Run the Docker container on localhost in the background (Windows)
                     bat 'start /B docker run -d -p 5000:5000 --name my-app-container my-devops-app'
                 }
