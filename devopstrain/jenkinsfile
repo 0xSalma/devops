@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     // Run your test scripts or curl commands to verify the app
-                    bat 'http://127.0.0.1:5000/health'
+                    bat ' curl http://127.0.0.1:5000/health'
                 }
             }
         }
