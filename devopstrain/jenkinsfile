@@ -5,6 +5,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image
+                    bat 'dir'
                     bat 'docker build -t my-devops-app .'
                 }
             }
